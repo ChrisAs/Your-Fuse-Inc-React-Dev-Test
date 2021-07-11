@@ -8,12 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-});
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
     overflow: "auto",
@@ -27,35 +23,82 @@ const useGridStyles = makeStyles(({ breakpoints }) => ({
     },
   },
 }));
-export default function Index() {
-  const classes = useStyles();
+export default function Index({ cryptoData, loading }) {
   const gridStyles = useGridStyles();
-  const currencies = ["1", "2", "3", "4"];
+  if (!cryptoData.length) loading = true;
   const CardItems = useMemo(
     () =>
-      currencies?.map((currency, key) => (
-        <Grid key={key} item xs>
-          <Card>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="alt image"
-                height="140"
-                image="url"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  name
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  details
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-      )),
-    [currencies],
+      cryptoData?.map(
+        (
+          {
+            image,
+            name,
+            symbol,
+            total_volume,
+            current_price,
+            market_cap,
+            market_cap_rank,
+          },
+          key,
+        ) =>
+          loading ? (
+            <Skeleton
+              key={key}
+              variant="rect"
+              width={280}
+              height={200}
+              style={{ margin: "5px", padding: "5px" }}
+            />
+          ) : (
+            <Grid key={key} item xs>
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="alt image"
+                    height="140"
+                    style={{ objectFit: "cover" }}
+                    image={image}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {name} ({symbol})
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {`Price : $${current_price}`}
+                    </Typography>{" "}
+                    <Typography
+                      variant="body2"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {`Total Volume : $${total_volume ?? "Unknown"}`}
+                    </Typography>{" "}
+                    <Typography
+                      variant="body2"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {`Mkt Cap : $${market_cap ?? "Not Avaiable"}`}
+                    </Typography>{" "}
+                    <Typography
+                      variant="body2"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {`RANK : ${market_cap_rank ?? "Not Ranked"}`}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ),
+      ),
+    [cryptoData, loading],
   );
   return (
     <Grid
