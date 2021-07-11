@@ -1,5 +1,5 @@
 import React from "react";
-
-export default function index() {
-  return <div></div>;
+import { CryptoInfo } from "../../Components";
+export default function Index() {
+  return <CryptoInfo />;
 }

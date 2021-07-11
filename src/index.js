@@ -1,10 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
-
+import { MainPage } from "./Pages";
+import store from "./Redux/store";
 ReactDOM.render(
   <React.StrictMode>
-    <>Main Component</>
+    <Provider store={store}>
+      <MainPage />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root"),
 );
