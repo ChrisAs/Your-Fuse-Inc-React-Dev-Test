@@ -6,7 +6,9 @@ import {
 
 const initialState = {
   loading: false,
-  data: [],
+  cryptoData: [],
+  page: 1,
+  totalCurrencies: 0,
   error: "",
 };
 
@@ -20,13 +22,16 @@ export const cryptoReducer = (state = initialState, action) => {
     case FETCH_CRYPTO_DATA_SUCCESS:
       return {
         loading: false,
-        data: action.payload,
+        cryptoData: action.payload.cryptoData,
+        totalCurrencies: action.payload.totalCurrencies,
+        page: action.payload.page,
         error: "",
       };
     case FETCH_CRYPTO_DATA_FAILURE:
       return {
         loading: false,
-        data: [],
+        cryptoData: [],
+        totalCurrencies: 0,
         error: action.payload,
       };
     default:

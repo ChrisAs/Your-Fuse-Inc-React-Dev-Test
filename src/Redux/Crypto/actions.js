@@ -10,10 +10,17 @@ export const fetchCryptoData = (page) => {
       dispatch({
         type: FETCH_CRYPTO_DATA_REQUEST,
       });
-      const response = { data: { data: [] } };
+      let response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=4&page=${page}&sparkline=false`,
+      );
+      response = await response.json();
       dispatch({
         type: FETCH_CRYPTO_DATA_SUCCESS,
-        payload: response.data.data,
+        payload: {
+          cryptoData: response,
+          totalCurrencies: Number(8434 / 4).toFixed(0), //this is the total number of coins avaiable  i can use to api to find total but currently (sometimes ) its crashing for some unknown reason
+          page,
+        },
       });
     } catch (error) {
       dispatch({
