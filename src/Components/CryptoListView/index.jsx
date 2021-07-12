@@ -54,7 +54,7 @@ export default function Index({ cryptoData, loading }) {
                     <Avatar alt="image" src={image} />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={`${name} (${symbol})`}
+                    primary={`${name} (${symbol.toUpperCase()})`}
                     secondary={
                       <Typography
                         component="span"

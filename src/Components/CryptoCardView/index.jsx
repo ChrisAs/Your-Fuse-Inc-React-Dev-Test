@@ -62,7 +62,7 @@ export default function Index({ cryptoData, loading }) {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {name} ({symbol})
+                      {name} ({symbol.toUpperCase()})
                     </Typography>
                     <Typography
                       variant="body2"
